@@ -1,0 +1,45 @@
+{
+  "name": "saned-server",
+  "description": "remote Interface for controling saned scanner.",
+  "version": "2.0.1",
+  "private": true,
+  "author": "Filipe Apolinário",
+  "main": "./main.js",
+  "maintainers": [
+    "Filipe Apolinário <filipe.apolinario@tecnico.ulisboa.pt>"
+  ],
+  "dependencies": {
+    "concat-stream": "1.5.0",
+    "request": "2.62.0",
+    "through2": "2.0.0"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f-apolinario/remote-saned-scanner.git"
+  },
+  "keywords": [
+    "media",
+    "server",
+    "multi",
+    "client",
+    "central",
+    "server",
+    "video",
+    "and",
+    "music",
+    "streamer"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/f-apolinario/remote-saned-scanner/issues"
+  },
+  "homepage": "https://github.com/f-apolinario/remote-saned-scanner#readme"
+}

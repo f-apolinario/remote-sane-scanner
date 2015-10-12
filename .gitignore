@@ -1,0 +1,8 @@
+#media folder
+media/*
+#log folder
+log/*
+#node_modules
+node_modules/*
+#visual studio code files
+.vscode/*
