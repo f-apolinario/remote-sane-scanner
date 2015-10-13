@@ -93,7 +93,7 @@ function serverHandler(request, response) {
   else {
 	var fs = require('fs');
 	  response.writeHead(200, { "Content-Type": "text/html" });
-	  fs.readFile(htmlPagesPath + '1.html', function (err, data) {
+	  fs.readFile(htmlPagesPath + 'index.html', function (err, data) {
 		response.end(data);
 	  })
   }
