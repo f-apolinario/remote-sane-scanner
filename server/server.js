@@ -54,32 +54,18 @@ function serverHandler(request, response) {
   }
   
   //process and emit response to request
-  //request can be one of three types of operations:
-  //list
-  /*if (op == 'list') {
-      var sendResponseFunction = getSendResponseFunction(op,media,incommingIP,port,response);
-      var path = mediaPath;
-      if(media){
-        path += media;
-      }
-      operationHandler.doListOperation(path,response,sendResponseFunction,errorHandler);
-    }
-    //play
-    else if (op == 'play') {
-      var range = request.headers.range;
-      var callback = function(){
-        var oper = logger.requestedOperationToJson(op,media,name);
-        logger.writeLog('finished request ' + oper,incommingIP);
-      }
-      if (pathname != '/player') {
-        operationHandler.forceMediaTag(pathname,media,name,ip,response,callback);
-        return;
-      }
-      var file_path = mediaPath + media + '/';
-      operationHandler.doPlayOperation(file_path,name,range,response,callback,errorHandler);
-    }*/
-	if (op == 'scan') {
+  if (op == 'scan') {
 		console.log(name);
+		var split = name.split('/');
+		if(split[0] != '..'){
+			console.log(split[0]);
+			name = split[0];
+		}
+		else{
+			console.log('invalid filename');
+			response.end('exec error: ' + 'invalid filename');
+                        return;
+		}
 		var exec = require('child_process').exec, child;
 
 		child = exec('scanimage --format tiff >/media/serverhdd/Users/'+name+'.tiff', function (error, stdout, stderr) {
@@ -97,41 +83,12 @@ function serverHandler(request, response) {
 	}
   //present initial page
   else {
-    var fs = require('fs');
-      response.writeHead(200, { "Content-Type": "text/html" });
-      fs.readFile(htmlPagesPath + '1.html', function (err, data) {
-        response.end(data);
-      })
+	var fs = require('fs');
+	  response.writeHead(200, { "Content-Type": "text/html" });
+	  fs.readFile(htmlPagesPath + '1.html', function (err, data) {
+		response.end(data);
+	  })
   }
-}
-
-function getSendResponseFunction(op, media, ip, port, clientStream) {
-  if (media) {
-    return function (files) {
-      var array = [];
-
-      files.forEach(function (fileName) {
-        array.push(fileName);
-      });
-      
-      clientStream.end(array.toString());
-
-      var oper = logger.requestedOperationToJson(op, media, '');
-      logger.writeLog('finished request ' + oper, ip);
-    };
-  }
-  else return function (mediaTypes) {
-    var array = [];
-
-    mediaTypes.forEach(function (media) {
-      array.push(media);
-    });
-    
-    clientStream.end(array.toString());
-
-    var oper = logger.requestedOperationToJson(op, media, '');
-    logger.writeLog('finished request ' + oper, ip);
-  };
 }
 
 function preprocessRequest(req) {
