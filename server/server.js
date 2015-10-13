@@ -68,7 +68,7 @@ function serverHandler(request, response) {
 		}
 		var exec = require('child_process').exec, child;
 
-		child = exec('scanimage --format tiff >/media/serverhdd/Users/'+name+'.tiff', function (error, stdout, stderr) {
+		child = exec('scanimage --format tiff'/* >/media/serverhdd/Users/'+name+'.tiff'*/, function (error, stdout, stderr) {
 			console.log('stdout: ' + stdout);
 			console.log('stderr: ' + stderr);
 			if (error !== null) {
@@ -78,7 +78,14 @@ function serverHandler(request, response) {
 			  return;
 			}
 			//response.writeHead(200, { "Content-Type": "text/plain"});
-			response.end('successfully scanned file ' + stdout +stderr);
+			response.writeHead(206, {
+				//'Content-Range': 'bytes ' + start + '-' + end + '/' + total,
+				//'Accept-Ranges': 'bytes',
+				//'Content-Length': chunksize,
+				'Content-Disposition': 'attachment; filename=\"' + name+'.tiff' + '\"',
+				"Content-Type": 'tiff'
+            });
+			response.end(stdout);
 		});
 	}
   //present initial page
